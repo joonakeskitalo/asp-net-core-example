@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sample.Api.DomainModel;
 using AutoMapper;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Sample.Api.Endpoints.v1.UserEndpoints
 {
@@ -19,23 +20,22 @@ namespace Sample.Api.Endpoints.v1.UserEndpoints
         }
 
         [HttpPost("v1/users")]
-        public override async Task<ActionResult<CreateUserResult>> HandleAsync([FromBody]CreateUserCommand request, CancellationToken cancellationToken)
+        [SwaggerOperation(
+            Summary = "Creates a new User",
+            Description = "Creates a new User",
+            OperationId = "User.Create",
+            Tags = new[] { "UserEndpoint" })
+        ]
+        public override async Task<ActionResult<CreateUserResult>> HandleAsync([FromBody] CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = new User();
-            user.Id = Guid.NewGuid();
+            var user = new User
+            {
+                Id = Guid.NewGuid()
+            };
             _mapper.Map(request, user);
             await _repository.AddAsync(user, cancellationToken);
             var result = _mapper.Map<CreateUserResult>(user);
             return Ok(result);
         }
-
-
-        // [HttpPost("v1/users")]
-        // public override Task<ActionResult<CreateUserResult>> HandleAsync(CreateUserCommand request, CancellationToken cancellationToken = default)
-        // {
-        //     // throw new NotImplementedException();
-        //     var user = new User();
-
-        // }
     }
 }

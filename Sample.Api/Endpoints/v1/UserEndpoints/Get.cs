@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sample.Api.DomainModel;
 using AutoMapper;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Sample.Api.Endpoints.v1.UserEndpoints
 {
@@ -20,6 +21,12 @@ namespace Sample.Api.Endpoints.v1.UserEndpoints
         }
 
         [HttpGet("/v1/users/{id}")]
+        [SwaggerOperation(
+            Summary = "Get a specific User",
+            Description = "Get a specific User",
+            OperationId = "User.Get",
+            Tags = new[] { "UserEndpoint" })
+        ]
         public override async Task<ActionResult<UserResult>> HandleAsync(Guid id, CancellationToken cancellationToken)
         {
             var user = await _repository.GetByIdAsync(id, cancellationToken);

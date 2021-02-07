@@ -1,6 +1,4 @@
-﻿using SampleEndpointApp.DomainModel;
-
-namespace Sample.Api.DomainModel
+﻿namespace Sample.Api.DomainModel
 {
     public class User : BaseEntity
     {

@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sample.Api.DomainModel;
-using AutoMapper;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Sample.Api.Endpoints.v1.UserEndpoints
 {
@@ -17,6 +17,12 @@ namespace Sample.Api.Endpoints.v1.UserEndpoints
         }
 
         [HttpDelete("v1/users/{id}")]
+        [SwaggerOperation(
+            Summary = "Deletes an User",
+            Description = "Deletes an User",
+            OperationId = "User.Delete",
+            Tags = new[] { "UserEndpoint" })
+        ]
         public override async Task<ActionResult<DeleteUserResult>> HandleAsync(Guid id, CancellationToken cancellationToken)
         {
             var user = await _repository.GetByIdAsync(id, cancellationToken);

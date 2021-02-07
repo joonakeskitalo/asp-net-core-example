@@ -1,5 +1,4 @@
-﻿using System;
-namespace Sample.Api.Endpoints.v1.UserEndpoints
+﻿namespace Sample.Api.Endpoints.v1.UserEndpoints
 {
     public class CreateUserCommand
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SampleEndpointApp.DomainModel
+namespace Sample.Api.DomainModel
 {
     public abstract class BaseEntity
     {

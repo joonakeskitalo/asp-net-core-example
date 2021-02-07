@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sample.Api.DataAccess;
 using Sample.Api.DomainModel;
+using Microsoft.OpenApi.Models;
 
 namespace Sample.Api
 {
@@ -22,6 +23,12 @@ namespace Sample.Api
         {
             services.AddDbContext<SampleDbContext>(options => options.UseInMemoryDatabase(databaseName: "Samples"));
             services.AddControllers();
+
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.EnableAnnotations();
+            });
+
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
         }
@@ -34,10 +41,10 @@ namespace Sample.Api
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
 
             app.UseEndpoints(endpoints =>
             {

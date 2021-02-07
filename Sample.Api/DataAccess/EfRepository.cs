@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sample.Api.DomainModel;
-using SampleEndpointApp.DomainModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
