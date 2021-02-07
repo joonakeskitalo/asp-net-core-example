@@ -2,6 +2,8 @@
 using Sample.Api.DomainModel;
 using Sample.Api.Endpoints.v1.UserEndpoints;
 using Sample.Api.Endpoints.v1.AlbumEndpoints;
+using Sample.Api.Endpoints.v1.SongEndpoints;
+using Sample.Api.Endpoints.v1.ArtistEndpoints;
 
 namespace Sample.Api.Helpers
 {
@@ -22,6 +24,20 @@ namespace Sample.Api.Helpers
             CreateMap<Album, UpdateAlbumResult>();
             CreateMap<Album, AlbumListResult>();
             CreateMap<Album, AlbumResult>();
+
+            CreateMap<CreateSongCommand, Song>();
+            CreateMap<CreateSongResult, Song>();
+            CreateMap<Song, CreateSongResult>();
+            CreateMap<Song, UpdateSongResult>();
+            CreateMap<Song, SongListResult>();
+            CreateMap<Song, SongResult>();
+
+            CreateMap<CreateArtistCommand, Artist>();
+            CreateMap<CreateArtistResult, Artist>();
+            CreateMap<Artist, CreateArtistResult>();
+            CreateMap<Artist, UpdateArtistResult>();
+            CreateMap<Artist, ArtistListResult>();
+            CreateMap<Artist, ArtistResult>();
         }
     }
 }
