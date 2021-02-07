@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Sample.Api.DataAccess;
 using Sample.Api.DomainModel;
 using Microsoft.OpenApi.Models;
+using Microsoft.Data.Sqlite;
 
 namespace Sample.Api
 {
@@ -21,10 +22,20 @@ namespace Sample.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<SampleDbContext>(options => options.UseInMemoryDatabase(databaseName: "Samples"));
+            // services.AddDbContext<SampleDbContext>(options => options.UseSqlite("DataSource=:memory:"));
+
+            var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
+            keepAliveConnection.Open();
+
+            services.AddDbContext<SampleDbContext>(options =>
+            {
+                options.UseSqlite(keepAliveConnection);
+            });
+
             services.AddControllers();
 
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
                 c.EnableAnnotations();
             });

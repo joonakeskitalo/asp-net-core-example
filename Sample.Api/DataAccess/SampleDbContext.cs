@@ -5,7 +5,10 @@ namespace Sample.Api.DataAccess
 {
     public class SampleDbContext : DbContext
     {
-        public SampleDbContext(DbContextOptions options) : base(options) { }
+        public SampleDbContext(DbContextOptions options) : base(options)
+        {
+            Database.EnsureCreated();
+        }
 
         public DbSet<Album> Albums { get; set; }
         public DbSet<Artist> Artists { get; set; }
