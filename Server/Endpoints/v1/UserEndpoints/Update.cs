@@ -30,6 +30,7 @@ namespace Server.Endpoints.v1.UserEndpoints
         public override async Task<ActionResult<UpdateUserResult>> HandleAsync(Guid id,[FromBody]UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _repository.GetByIdAsync(request.Id, cancellationToken);
+            user.UpdatedOn = DateTime.UtcNow;
             _mapper.Map(request, user);
             await _repository.UpdateAsync(user, cancellationToken);
             var result = _mapper.Map<UpdateUserResult>(user);

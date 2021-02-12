@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Bogus;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +22,7 @@ namespace Server.DataAccess
             modelBuilder.Entity<Album>().HasData(FakeData.Albums);
             modelBuilder.Entity<Song>().HasData(FakeData.Songs);
             modelBuilder.Entity<Genre>().HasData(FakeData.Genres);
+            modelBuilder.Entity<User>().HasData(FakeData.Users);
         }
 
         public DbSet<Album> Albums { get; set; }
@@ -45,8 +46,8 @@ namespace Server.DataAccess
         {
             f = new Faker();
 
-            GenerateGenres(count);
             GenerateUsers(count);
+            GenerateGenres(count);
             GenerateArtists(count);
         }
 
@@ -72,7 +73,10 @@ namespace Server.DataAccess
                 {
                     Id = Guid.NewGuid(),
                     Name = f.Name.FullName(),
-                    Password = f.Random.AlphaNumeric(32)
+                    Email = f.Internet.ExampleEmail(),
+                    Password = f.Random.AlphaNumeric(32),
+                    CreatedOn = DateTime.UtcNow,
+                    UpdatedOn = DateTime.UtcNow
                 };
 
                 Users.Add(user);
