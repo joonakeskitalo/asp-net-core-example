@@ -22,8 +22,6 @@ namespace Server
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddDbContext<SampleDbContext>(options => options.UseSqlite("DataSource=:memory:"));
-
             var keepAliveConnection = new SqliteConnection("DataSource=:memory:");
             keepAliveConnection.Open();
 
