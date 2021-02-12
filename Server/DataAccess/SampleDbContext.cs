@@ -16,17 +16,19 @@ namespace Server.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            FakeData.Init(128);
+            FakeData.Init(512);
 
             modelBuilder.Entity<Artist>().HasData(FakeData.Artists);
             modelBuilder.Entity<Album>().HasData(FakeData.Albums);
             modelBuilder.Entity<Song>().HasData(FakeData.Songs);
+            modelBuilder.Entity<Genre>().HasData(FakeData.Genres);
         }
 
         public DbSet<Album> Albums { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Song> Songs { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Genre> Genres { get; set; }
     }
 
     public static class FakeData
@@ -35,6 +37,7 @@ namespace Server.DataAccess
         public static List<Artist> Artists = new List<Artist>();
         public static List<Song> Songs = new List<Song>();
         public static List<User> Users = new List<User>();
+        public static List<Genre> Genres = new List<Genre>();
 
         private static Faker f;
 
@@ -42,7 +45,38 @@ namespace Server.DataAccess
         {
             f = new Faker();
 
+            GenerateGenres(count);
+            GenerateUsers(count);
             GenerateArtists(count);
+        }
+
+        private static void GenerateGenres(int genreCount)
+        {
+            for (var i = 0; i < genreCount; i++)
+            {
+                var genre = new Genre
+                {
+                    Id = Guid.NewGuid(),
+                    Name = f.Music.Genre()
+                };
+
+                Genres.Add(genre);
+            }
+        }
+
+        private static void GenerateUsers(int userCount)
+        {
+            for (var i = 0; i < userCount; i++)
+            {
+                var user = new User
+                {
+                    Id = Guid.NewGuid(),
+                    Name = f.Name.FullName(),
+                    Password = f.Random.AlphaNumeric(32)
+                };
+
+                Users.Add(user);
+            }
         }
 
         private static void GenerateArtists(int artistCount)

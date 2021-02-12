@@ -4,6 +4,7 @@ using Server.Endpoints.v1.UserEndpoints;
 using Server.Endpoints.v1.AlbumEndpoints;
 using Server.Endpoints.v1.SongEndpoints;
 using Server.Endpoints.v1.ArtistEndpoints;
+using Server.Endpoints.v1.GenreEndpoints;
 
 namespace Server.Helpers
 {
@@ -38,6 +39,13 @@ namespace Server.Helpers
             CreateMap<Artist, UpdateArtistResult>();
             CreateMap<Artist, ArtistListResult>();
             CreateMap<Artist, ArtistResult>();
+
+            CreateMap<CreateGenreCommand, Genre>();
+            CreateMap<CreateGenreResult, Genre>();
+            CreateMap<Genre, CreateGenreResult>();
+            CreateMap<Genre, UpdateGenreResult>();
+            CreateMap<Genre, GenreListResult>();
+            CreateMap<Genre, GenreResult>();
         }
     }
 }
